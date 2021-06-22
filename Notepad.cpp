@@ -81,15 +81,9 @@ void Notepad::connectSignals() {
 }
 
 int Notepad::get_words() {
-	int nr{ 0 };
 	QString txt = textEdit->document()->toPlainText();
-	for (const auto el : txt) {
-		if (el == ' ') {
-			nr++;
-		}
-	}
-	if (txt.back() == ' ')nr--;
-	return nr+1;
+	auto nr = txt.split(QRegularExpression("(\\s|\\n|\\t|\\r)+"), Qt::SkipEmptyParts).count();
+	return nr;
 }
 
 void Notepad::setInitialState() {
